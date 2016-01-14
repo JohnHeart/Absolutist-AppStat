@@ -272,7 +272,7 @@ package com.absolutist
 		 * @private Pause session.
 		 * Call this method when the Event.DEACTIVATE was thrown.
 		 */			
-		private static function pauseSession():void
+		private static function pauseSession(event:Event = null):void
 		{
 			if (mBlocked) return;
 			if (!mCache.sessionStart || !mCache.idSession) return;
@@ -297,7 +297,7 @@ package com.absolutist
 		 * @private Resume session.
 		 * Call this method when the Event.ACTIVATE was thrown.
 		 */
-		private static function resumeSession():void
+		private static function resumeSession(event:Event = null):void
 		{
 			if (mBlocked) return;
 			
@@ -328,7 +328,11 @@ package com.absolutist
 		 */		
 		private static function advanceTime (event:Event):void
 		{
-			if (!mSessionEnabled) return;
+			if (!mSessionEnabled)
+			{
+				mTimestamp = getTimer();
+				return;
+			}
 			
 			var time:Number = (getTimer() - mTimestamp) / 1000;
 			mTimestamp = getTimer();
