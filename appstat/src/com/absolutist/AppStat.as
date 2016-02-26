@@ -110,6 +110,7 @@ package com.absolutist
 		
 		/**
 		 * Initialization of Absolutist Analytics.
+		 * @param stage Stage instance.
 		 * @param appId Application id.
 		 * @param appVersion Application version (eg "1.0.0").
 		 * @param uniqueDeviceId Unique device ID.
@@ -140,21 +141,21 @@ package com.absolutist
 			
 			if (!stage)
 			{
-				log("Error -> the stage is not defined");
+				log("Error -> stage is not defined");
 				mBlocked = true;
 				return;
 			}
 			
 			if (!mAppID.length)
 			{
-				log("Error -> invalid appId");
+				log("Error -> appId is not defined");
 				mBlocked = true;
 				return;
 			}
 			
 			if (!mUniqueDeviceId.length)
 			{
-				log("Error -> invalid uniqueDeviceId");
+				log("Error -> uniqueDeviceId is not defined");
 				mBlocked = true;
 				return;
 			}
@@ -734,7 +735,7 @@ package com.absolutist
 		private static function GET_DATE_LOCAL ():Number
 		{
 			var date:Date = new Date();
-			return date.time + date.timezoneOffset * 60 * 1000;
+			return date.time - date.timezoneOffset * 60 * 1000;
 		}
 		
 		private static function GENERATE_ID ():ByteArray
