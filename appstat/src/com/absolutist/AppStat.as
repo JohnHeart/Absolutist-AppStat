@@ -99,6 +99,9 @@ package com.absolutist
 		/** @private AppStat is blocked */
 		private static var mBlocked:Boolean;
 		
+		/** @private SharedObject localPath */
+		private static var mLocalPath:String;
+		
 		/** @private Helpers */
 		private static var mTimestamp:uint;
 		private static var mAutoFlushTimer:Number;
@@ -116,10 +119,11 @@ package com.absolutist
 		 * @param uniqueDeviceId Unique device ID.
 		 * @param store Store name (eg AppStat.STORE_FACEBOOK).
 		 * @param serverURL Optional.
+		 * @param The full or partial path to the SWF file that created the shared object.
 		 * @param developerMode Optional.
 		 * 
 		 */				
-		public static function init(stage:Stage, appId:String, appVersion:String, uniqueDeviceId:String, store:String, referer:String = null, serverURL:String = null, developerMode:Boolean = false):void
+		public static function init(stage:Stage, appId:String, appVersion:String, uniqueDeviceId:String, store:String, referer:String = null, serverURL:String = null, localPath:String = null, developerMode:Boolean = false):void
 		{
 			const DEFAULT_VERSION:String = '1.0.0';
 			const DEFAULT_STORE:String = 'web';
@@ -137,6 +141,7 @@ package com.absolutist
 			mStore = store || DEFAULT_STORE;
 			mReferer = referer || '';
 			mServerURL = serverURL || DEFAULT_SERVER;
+			mLocalPath = localPath;
 			mDeveloperMode = developerMode;
 			
 			if (!stage)
@@ -489,7 +494,7 @@ package com.absolutist
 			
 			try
 			{
-				so = SharedObject.getLocal('appstat');
+				so = SharedObject.getLocal('appstat', mLocalPath);
 				if (so)
 				{
 					data = so.data.cache || null;
@@ -557,7 +562,7 @@ package com.absolutist
 			
 			try
 			{
-				so = SharedObject.getLocal('appstat');
+				so = SharedObject.getLocal('appstat', mLocalPath);
 				so.data.cache = mCache;
 				so.flush();
 				so.close();
