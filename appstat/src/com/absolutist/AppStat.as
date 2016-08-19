@@ -494,7 +494,7 @@ package com.absolutist
 			
 			try
 			{
-				so = SharedObject.getLocal('appstat', mLocalPath);
+				so = SharedObject.getLocal(mAppID + '-appstat', mLocalPath);
 				if (so)
 				{
 					data = so.data.cache || null;
@@ -562,7 +562,7 @@ package com.absolutist
 			
 			try
 			{
-				so = SharedObject.getLocal('appstat', mLocalPath);
+				so = SharedObject.getLocal(mAppID + '-appstat', mLocalPath);
 				so.data.cache = mCache;
 				so.flush();
 				so.close();
