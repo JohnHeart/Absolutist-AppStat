@@ -119,7 +119,7 @@ package com.absolutist
 		 * @param uniqueDeviceId Unique device ID.
 		 * @param store Store name (eg AppStat.STORE_FACEBOOK).
 		 * @param serverURL Optional.
-		 * @param The full or partial path to the SWF file that created the shared object.
+		 * @param localPath The full or partial path to the SWF file that created the shared object.
 		 * @param developerMode Optional.
 		 * 
 		 */				
@@ -128,7 +128,6 @@ package com.absolutist
 			const DEFAULT_VERSION:String = '1.0.0';
 			const DEFAULT_STORE:String = 'web';
 			const DEFAULT_OS:String = 'Flash';
-			const DEFAULT_SERVER:String = 'http://data.absolutist.com/ev/dt.php';
 			
 			mAppID = appId || '';
 			mAppVersion = FORMAT_APP_VERSION(appVersion || DEFAULT_VERSION);
@@ -140,7 +139,7 @@ package com.absolutist
 			mDeviceModel = GET_FLASH_PLAYER();
 			mStore = store || DEFAULT_STORE;
 			mReferer = referer || '';
-			mServerURL = serverURL || DEFAULT_SERVER;
+			mServerURL = serverURL || '';
 			mLocalPath = localPath;
 			mDeveloperMode = developerMode;
 			
@@ -161,6 +160,13 @@ package com.absolutist
 			if (!mUniqueDeviceId.length)
 			{
 				log("Error -> uniqueDeviceId is not defined");
+				mBlocked = true;
+				return;
+			}
+			
+			if (!mServerURL.length)
+			{
+				log("Error -> serverURL is not defined");
 				mBlocked = true;
 				return;
 			}
