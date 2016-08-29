@@ -303,6 +303,7 @@ package com.absolutist
 			delete mCache.idSession;
 			
 			saveCache();
+			flush();
 		}
 		
 		/**
